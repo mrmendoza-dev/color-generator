@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Color Generator</title>
+        <link rel="icon" href="images/logo.png">
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+
+        <header class="container">
+            <h2>Theme Creator</h2>
+        </header>
+
+
+
+        <section class="color-selector container">
+
+
+
+            <label for="hex">Color (Hex)</label>
+            <input type="color" id="colorInput">
+
+
+            <label for="hex">Number of Colors</label>
+            <input type="number" value="5" id="numColorsInput">
+
+            <label for="hex">Color (Hex)</label>
+            <select name="mode" id="modeInput"></select>
+            
+            <button type="submit" class="btn" id="schemeBtn">Get Color Scheme</button>
+        </section>
+
+        <section id="colorDisplay" class="container"></section>
+
+
+
+        <section class="color-editor container">
+
+            <h1 class="section__title">Lighten/Darken Color</h1>
+            <div class="editor__inputs">
+                <label for="hex">Color (Hex)</label>
+                <input name="hex" type="text" id="hexInput" placeholder="#000000" value="#00ff00">
+
+                <div class="toggle">
+                    <p id="lightenText" class="toggle-text">Light</p>
+                    <div id="toggleBtn" class="toggle-btn" >
+                        <div class="inner-circle"></div>
+                    </div>
+                    <p id="darkenText" class="toggle-text">Darken</p>
+                </div>
+
+                <label for="slider" id="sliderText">0%</label>
+                <input name="slider" type="range" id="sliderInput" class="slider"
+                value="0" min="0" max="100">
+            </div>
+
+
+
+
+
+            <div class="editor__display">
+                <div>
+                    <p>Input Color</p>
+                    <div id="inputColor" class="box"></div>
+                </div>
+                <div>
+                    <p id="alteredColorText">Altered Color</p>
+                    <div id="alteredColor" class="box"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+
+
+
+
+        <script src="index.js"></script>
+    </body>
+</html>
