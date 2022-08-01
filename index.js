@@ -307,3 +307,9 @@ inputColor.addEventListener("click", ()=> {
 // chrome extension
 // valid hex character check
 // add rgb sliders for each value
+
+
+
+
+// ADD links to design resources
+//   coolors, cssgradients, etc.
