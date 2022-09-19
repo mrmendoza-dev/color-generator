@@ -1,86 +1,13 @@
-<html>
-    <head>
-        <title>Color Generator</title>
-        <link rel="icon" href="images/logo.png">
-        <link rel="stylesheet" href="index.css">
-    </head>
-
-
-    <body>
-        <header class="container">
-            <h2>Theme Creator</h2>
-        </header>
-
-        <section class="color-selector container">
-
-
-
-            <div class="inputs__color">
-
-                <div>
-                    <div class="color__input">
-                        <label for="color"></label>
-                        <input name="color" type="color" id="colorInput">
-                        <label for="hex"></label>
-                        <input name="hex" type="text" id="hexInput" placeholder="#000000" value="#00ff00">
-                    </div>
-                    <button type="submit" class="btn" id="randomColorBtn">Random Color</button>
-                    <button class="btn" id="toggleHashBtn">Include #</button>
-
-                </div>
-
-
-                <div class="color__editor">
-                    <div class="toggle">
-                        <p id="lightenText" class="toggle-text">Light</p>
-                        <div id="toggleBtn" class="toggle-btn" >
-                            <div class="inner-circle"></div>
-                        </div>
-                        <p id="darkenText" class="toggle-text">Darken</p>
-                    </div>
-                    
-                    <label for="slider" id="sliderText">0%</label>
-                    <input name="slider" type="range" id="sliderInput" class="slider"
-                    value="0" min="0" max="100">
-                </div>
-
-
-
-            </div>
-
-
-            <div class="editor__display">
-                <div>
-                    <p class="color-text" id="inputColorText">Input Color</p>
-                    <div id="inputColor" class="box"></div>
-                </div>
-                <div>
-                    <p class="color-text" id="alteredColorText">Altered Color</p>
-                    <div id="alteredColor" class="box"></div>
-                </div>
-            </div>
-
-
-
-            <div class="inputs__scheme">
-                <label for="numColors"></label>
-                <input name="numColors" type="number" value="5" id="numColorsInput" class="num-input">
-
-                <label for="mode"></label>
-                <select name="mode" id="modeInput" class="mode-input"></select>
-
-                <button type="submit" class="btn" id="schemeBtn">Generate</button>
-            </div>
-            
-        </section>
-
-        <section id="colorDisplay" class="container"></section>
-
-
-
-
-
-
-        <script src="index.js"></script>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
