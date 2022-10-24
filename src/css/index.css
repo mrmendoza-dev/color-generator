@@ -31,7 +31,7 @@ button {
 }
 
 .App {
-    font-family: Roboto;
+    font-family: Arial;
     color: var(--clr-font);
     background-color: var(--clr-bg);
     width: 80%;
