@@ -20,6 +20,7 @@ import {nanoid} from "nanoid"
 
 function App() {
     const [currentColor, setCurrentColor] = useState("#000000");
+    const [alteredColor, setAlteredColor] = useState("#000000");
     const [numColors, setNumColors] = useState(5);
     const [colorMode, setColorMode] = useState(modes[0]);
     const [hashed, setHashed] = useState(false);
@@ -83,7 +84,6 @@ function generateRandomColor() {
       let r = Math.random() * 256;
       return Math.floor(r);
     }
-
     let r = randomValue();
     let g = randomValue();
     let b = randomValue();
@@ -95,14 +95,14 @@ function generateRandomColor() {
 
 
 function generateTheme() {
-      let hexVal = currentColor.replace("#", "");
-      let url = `${apiUrl}?hex=${hexVal}&mode=${colorMode}&count=${numColors}`;
+    let hexVal = currentColor.replace("#", "");
+    let url = `${apiUrl}?hex=${hexVal}&mode=${colorMode}&count=${numColors}`;
 
-      fetch(url, { method: "GET" })
+    fetch(url, { method: "GET" })
         .then((res) => res.json())
         .then((data) => {
-          let colorsArray = data.colors;
-          setColorTheme(colorsArray);
+        let colorsArray = data.colors;
+        setColorTheme(colorsArray);
         });
 }
 
