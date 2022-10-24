@@ -172,6 +172,7 @@ function generateTheme() {
                 <input
                   name="color"
                   type="color"
+                  className="color-picker"
                   onChange={(e) => updateColor(e.target.value.toUpperCase())}
                   value={currentColor}
                 />
@@ -184,40 +185,45 @@ function generateTheme() {
                   id="hexInput"
                   placeholder="#000000"
                   value={currentColor}
+                  className="color-text"
                   onChange={(e) => updateColor(e.target.value.toUpperCase())}
                 />
               </>
             </div>
 
             <button className="btn" onClick={generateRandomColor}>
-              Random Color
+              Random
             </button>
 
-            <button className="btn" onClick={toggleHash}>
+            {/* <button className="btn" onClick={toggleHash}>
               Include #
-            </button>
+            </button> */}
           </div>
 
           <div className="color-editor">
             <div className="toggle">
-              <p className="toggle-text">Light</p>
-              <button className="btn" onClick={toggleAlter}>TOGGLE</button>
+              <p className="toggle-text">Lighten</p>
+              <button className="btn" onClick={toggleAlter}>
+                TOGGLE
+              </button>
               <p className="toggle-text">Darken</p>
             </div>
 
-            <label htmlFor="slider" id="sliderText">
-              {alterPercent}%
-            </label>
-            <input
-              name="slider"
-              type="range"
-              id="sliderInput"
-              className="slider"
-              min="0"
-              max="100"
-              value={alterPercent}
-              onChange={updateAlterPercent}
-            />
+            <div className="">
+              <label htmlFor="slider" id="sliderText">
+                {alterPercent}%
+              </label>
+              <input
+                name="slider"
+                type="range"
+                id="sliderInput"
+                className="slider"
+                min="0"
+                max="100"
+                value={alterPercent}
+                onChange={updateAlterPercent}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -232,7 +238,7 @@ function generateTheme() {
           ></button>
         </div>
         <div className="altered-col">
-          <p className="color-text">Altered Color</p>
+          <p className="color-text">Altered</p>
           <button
             className="color-box"
             style={{ backgroundColor: alterColor(currentColor, alterPercent) }}
@@ -241,33 +247,37 @@ function generateTheme() {
         </div>
       </div>
 
-      <div className="inputs-scheme container">
-        <label htmlFor="numColors">Number of colors</label>
-        <input
-          name="numColors"
-          type="number"
-          value={numColors}
-          onChange={updateNumColors}
-          id="numColorsInput"
-          className="num-input"
-        />
+      <div className="theme-filters container">
+        <div className="">
+          <label htmlFor="numColors">Number of colors</label>
+          <input
+            name="numColors"
+            type="number"
+            value={numColors}
+            onChange={updateNumColors}
+            id="numColorsInput"
+            className="num-input"
+          />
+        </div>
 
-        <label htmlFor="mode">Theme Mode</label>
-        <select
-          name="mode"
-          id="modeInput"
-          className="mode-input"
-          onChange={updateMode}
-          value={colorMode}
-        >
-          {modes.map((mode) => {
-            return (
-              <option key={nanoid()} value={mode.toLowerCase()}>
-                {mode}
-              </option>
-            );
-          })}
-        </select>
+        <div className="">
+          <label htmlFor="mode">Theme Mode</label>
+          <select
+            name="mode"
+            id="modeInput"
+            className="mode-input"
+            onChange={updateMode}
+            value={colorMode}
+          >
+            {modes.map((mode) => {
+              return (
+                <option key={nanoid()} value={mode.toLowerCase()}>
+                  {mode}
+                </option>
+              );
+            })}
+          </select>
+        </div>
 
         <button type="submit" className="btn" onClick={generateTheme}>
           Generate
