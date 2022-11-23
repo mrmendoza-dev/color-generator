@@ -1,12 +1,13 @@
 :root {
-  --clr-font: #ffffff;
-  --clr-bg: #2c324f;
-  --clr-dark: #1c1f2b;
-  --clr-shadow: #2c324f;
-  --clr-hr: #333;
-  --clr-accent: #1e2135b9;
+    --clr-font: #ffffff;
+    --clr-bg: #2c324f;
+    --clr-body-bg: #1f233b;
+    --clr-dark: #1c1f2b;
+    --clr-shadow: #2c324f;
+    --clr-hr: #333;
+    --clr-accent: #1e2135b9;
+    --bg: linear-gradient(130deg, rgba(44,50,79,1) 0%, rgba(35,41,66,1) 100%);
 }
-
 
 * {
   box-sizing: border-box;
@@ -21,6 +22,7 @@ body {
     margin: 0;
     padding: 0;
     font-size: 16px;
+    background-color: var(--clr-body-bg);
 }
 
 img {
@@ -38,13 +40,14 @@ button {
     font-family: Roboto, Arial, sans-serif;
     color: var(--clr-font);
     background-color: var(--clr-bg);
+    box-shadow: 0 0 40px #14141472;
     width: 80%;
     height: 100vh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     position: relative;
-    background: linear-gradient(130deg, rgba(44,50,79,1) 0%, rgba(35,41,66,1) 100%);
+    background: var(--bg);
 
 }
 
