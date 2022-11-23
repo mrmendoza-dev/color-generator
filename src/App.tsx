@@ -39,9 +39,12 @@ function App() {
 
     useEffect(() => {
       setCurrentColor(generateRandomColor());
-      generateTheme();
     }, []); 
 
+    useEffect(() => {
+      generateTheme();
+    }, [currentColor]); 
+    
 
 
   function copyColor(e: any) {
