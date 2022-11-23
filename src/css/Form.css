@@ -1,0 +1,132 @@
+.Form {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.form-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.form-input-block {
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  border-radius: 10px;
+  box-shadow: 3px 3px 3px var(--clr-shadow);
+  border: 1px solid var(--clr-shadow);
+  outline: none;
+  padding: 0.3em 0.8em;
+  background-color: var(--clr-dark);
+  color: var(--clr-font);
+}
+
+.form-input {
+  font-size: 1.2rem;
+  width: 200px;
+}
+
+.form-textarea {
+  border-radius: 20px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  font-weight: 400;
+  width: 100%;
+  resize: none;
+}
+
+.form-checkbox {
+}
+
+.form-fieldset {
+}
+
+.form-legend {
+  border-radius: 20px;
+  font-size: 1.2rem;
+  padding: 0.3em 0.6em;
+}
+
+.form-radio {
+  width: 30px;
+}
+
+.form-select {
+  font-size: 1.2rem;
+}
+
+.form-btn {
+  font-size: 1.2rem;
+  border-radius: 15px;
+  box-shadow: 3px 3px 3px var(--clr-shadow);
+  border: 1px solid var(--clr-shadow);
+  outline: none;
+  padding: 0.4em 0.8em;
+  background-color: #3737c2;
+  color: #fff;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 150ms;
+}
+
+.form-btn:hover {
+  opacity: .8;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: .8em;
+}
+
+
+.form-radios{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #bcbcbc;
+    border-radius: 5px;
+}
+
+.radio{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #bcbcbc;
+    padding: 4px 8px;
+}
+
+.radio:first-child{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.radio:last-child{
+    border-bottom: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+input::file-selector-button {
+  background-color: inherit;
+  color: inherit;
+}
+
+
+.toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.form-slider {
+  display: flex;
+}
+.silder-text {
+}

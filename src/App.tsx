@@ -1,11 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import './css/App.css'
+import "./css/Form.css";
+
 import logo from "./assets/logo.png"
 import {nanoid} from "nanoid"
+import Footer from "./components/Nav/Footer";
+import Nav from "./components/Nav/Nav";
 
-  const apiUrl = "https://www.thecolorapi.com/scheme";
 
 
+
+
+function App() {
     const modes = [
       "analogic",
       "analogic-complement",
@@ -16,9 +22,7 @@ import {nanoid} from "nanoid"
       "triad",
       "quad",
     ];
-
-
-function App() {
+    
     const [currentColor, setCurrentColor] = useState("#000000");
     const [alteredColor, setAlteredColor] = useState("#000000");
     const [numColors, setNumColors] = useState(5);
@@ -30,6 +34,7 @@ function App() {
 
 
     const modeInput = useRef();
+    const apiUrl = "https://www.thecolorapi.com/scheme";
 
 
     useEffect(() => {
@@ -149,7 +154,10 @@ function generateTheme() {
     const newR = increaseWithin0To255(r, amount);
     const newG = increaseWithin0To255(g, amount);
     const newB = increaseWithin0To255(b, amount);
-    return convertRGBToHex(newR, newG, newB);
+    const altered =  convertRGBToHex(newR, newG, newB);
+    // setAlteredColor(altered);
+    return altered;
+
   }
 
   function increaseWithin0To255(hex: any, amount: any) {
@@ -158,146 +166,154 @@ function generateTheme() {
 
   return (
     <div className="App">
-      <div className="header">
-        <img className="header-logo" src={logo} />
-        <p className="header-title">Color Generator</p>
+      <div className="title-banner">
+        <img className="title-logo" src={logo} />
+        <p className="app-title">Color Generator</p>
       </div>
 
-      <div className="color-selector container">
-        <div className="inputs-color">
-          <div className="color-selector">
-            <div className="color-inputs">
-              <>
-                <label htmlFor="color"></label>
-                <input
-                  name="color"
-                  type="color"
-                  className="color-picker"
-                  onChange={(e) => updateColor(e.target.value.toUpperCase())}
-                  value={currentColor}
-                />
-              </>
-              <>
-                <label htmlFor="hex"></label>
-                <input
-                  name="hex"
-                  type="text"
-                  id="hexInput"
-                  placeholder="#000000"
-                  value={currentColor}
-                  className="color-text"
-                  onChange={(e) => updateColor(e.target.value.toUpperCase())}
-                />
-              </>
-            </div>
-
-            <button className="btn" onClick={generateRandomColor}>
-              Random
-            </button>
-
-            {/* <button className="btn" onClick={toggleHash}>
-              Include #
-            </button> */}
-          </div>
-
-          <div className="color-editor">
-            <div className="toggle">
-              <p className="toggle-text">Lighten</p>
-              <button className="btn" onClick={toggleAlter}>
-                TOGGLE
-              </button>
-              <p className="toggle-text">Darken</p>
-            </div>
-
-            <div className="">
-              <label htmlFor="slider" id="sliderText">
-                {alterPercent}%
-              </label>
+      <div className="content-wrapper">
+        <div className="color-editor controls-banner">
+          <div className="controls">
+            <div className="color-selector">
               <input
-                name="slider"
-                type="range"
-                id="sliderInput"
-                className="slider"
-                min="0"
-                max="100"
-                value={alterPercent}
-                onChange={updateAlterPercent}
+                name="color"
+                type="color"
+                className="form-color"
+                onChange={(e) => updateColor(e.target.value.toUpperCase())}
+                value={currentColor}
               />
+              <input
+                name="hex"
+                type="text"
+                id="hexInput"
+                placeholder="#000000"
+                value={currentColor}
+                className="form-input"
+                onChange={(e) => updateColor(e.target.value.toUpperCase())}
+              />
+              <button className="form-btn" onClick={generateRandomColor}>
+                Random
+              </button>
+            </div>
+
+            <div className="color-editor">
+              <div className="toggle">
+                <p className="toggle-text">Lighten/Darken</p>
+                <button className="form-btn" onClick={toggleAlter}>
+                  TOGGLE
+                </button>
+                <div className="form-silder">
+                  <p className="silder-text">{alterPercent}%</p>
+                  <input
+                    name="slider"
+                    type="range"
+                    className="slider"
+                    min="0"
+                    max="100"
+                    value={alterPercent}
+                    onChange={updateAlterPercent}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="theme-filters">
+              <div className="">
+                <label htmlFor="numColors">Number of colors</label>
+                <input
+                  name="numColors"
+                  type="number"
+                  value={numColors}
+                  onChange={updateNumColors}
+                  className="form-input"
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="mode">Theme Mode</label>
+                <select
+                  name="mode"
+                  className="form-select"
+                  onChange={updateMode}
+                  value={colorMode}
+                >
+                  {modes.map((mode) => {
+                    return (
+                      <option key={nanoid()} value={mode.toLowerCase()}>
+                        {mode}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                className="form-btn"
+                onClick={generateTheme}
+              >
+                Generate
+              </button>
+            </div>
+          </div>
+
+          <div className="color-altered-display">
+            <div className="altered-col">
+              <p className="color-text">Input Color</p>
+              <button
+                className="color-box"
+                style={{ backgroundColor: currentColor }}
+                onClick={copyColor}
+              ></button>
+              <p className="color-col-hex">{currentColor}</p>
+            </div>
+            <div className="altered-col">
+              <p className="color-text">Altered</p>
+              <button
+                className="color-box"
+                style={{
+                  backgroundColor: alterColor(currentColor, alterPercent),
+                }}
+                onClick={copyColor}
+              ></button>
+              <p className="color-col-hex">
+                {alterColor(currentColor, alterPercent)}
+              </p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="color-altered-display container">
-        <div className="altered-col">
-          <p className="color-text">Input Color</p>
-          <button
-            className="color-box"
-            style={{ backgroundColor: currentColor }}
-            onClick={copyColor}
-          ></button>
-        </div>
-        <div className="altered-col">
-          <p className="color-text">Altered</p>
-          <button
-            className="color-box"
-            style={{ backgroundColor: alterColor(currentColor, alterPercent) }}
-            onClick={copyColor}
-          ></button>
+        <div className="color-theme-display">
+          {colorTheme.map((color: any) => {
+            return (
+              <div className="color-col">
+                <button
+                  key={nanoid()}
+                  className="color-col-display"
+                  style={{ backgroundColor: color.hex.value }}
+                  onClick={copyColor}
+                ></button>
+                <p className="color-col-hex">{color.hex.value}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <div className="theme-filters container">
-        <div className="">
-          <label htmlFor="numColors">Number of colors</label>
-          <input
-            name="numColors"
-            type="number"
-            value={numColors}
-            onChange={updateNumColors}
-            id="numColorsInput"
-            className="num-input"
-          />
-        </div>
-
-        <div className="">
-          <label htmlFor="mode">Theme Mode</label>
-          <select
-            name="mode"
-            id="modeInput"
-            className="mode-input"
-            onChange={updateMode}
-            value={colorMode}
-          >
-            {modes.map((mode) => {
-              return (
-                <option key={nanoid()} value={mode.toLowerCase()}>
-                  {mode}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-
-        <button type="submit" className="btn" onClick={generateTheme}>
-          Generate
-        </button>
-      </div>
-
-      <div className="color-theme-display container">
-        {colorTheme.map((color: any) => {
-          return (
-            <button
-              key={nanoid()}
-              className="color-col"
-              style={{ backgroundColor: color.hex.value }}
-              onClick={copyColor}
-            ></button>
-          );
-        })}
-      </div>
+      <Footer />
     </div>
   );
 }
 
 export default App
+
+
+              // <div className="color-col">
+              //   <button
+              //     key={nanoid()}
+              //     className="color-col-display"
+              //     style={{ backgroundColor: color.hex.value }}
+              //     onClick={copyColor}
+              //   ></button>
+              //   <p className="color-col-hex">{color.hex.value}</p>
+              // </div>

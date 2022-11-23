@@ -1,10 +1,9 @@
-:root {
-  --clr-font: #ffffff;
-  --clr-bg: #2c324f;
-  --clr-dark: #1c1f2b;
-  --clr-shadow: #2c324f;
-  --clr-hr: #333;
-  --clr-accent: #1e2135b9;
+root {
+  --clr-font: #fff;
+  --clr-bg: #122738;
+  --clr-accent: #3d3f54;
+    --clr-dark: #3d3f54;
+
 }
 
 
@@ -44,13 +43,8 @@ button {
     display: flex;
     flex-direction: column;
     position: relative;
-    background: linear-gradient(130deg, rgba(44,50,79,1) 0%, rgba(35,41,66,1) 100%);
-
 }
 
-.content-wrapper {
-    padding: 2em 4em;
-}
 
 .app-title {
   font-size: 2.4rem;
@@ -82,68 +76,125 @@ button {
   z-index: 5;
   width: 60px;
 }
+/* .color-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+} */
 
 
+.color-selector {
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; */
+  /* height: 75px; */
+}
+/* .color-inputs {
+  display: flex;
+}
 
+.color-picker {
+  width: 40px;
+  height: 40px;
+}
+.color-text {
+  width: 100px;
+  text-align: center;
+} */
 
+/* .color-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 1em;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+} */
+
+/* .container {
+  margin: 0 auto;
+} */
 
 
 .color-theme-display {
   display: flex;
   width: 90%;
-  margin-top: 2em;
- }
-
-.controls-banner {
-  margin-top: 2em;
-  background: rgba(0, 0, 0, 0.267);
-  padding: 2em 4em;
-  border-radius: 3em;
-  min-width: 300px;
-  width: min-content;
-  margin: 0 auto;
+  padding: 0 2em;
 }
 
 
+.color-altered-display {
+  display: flex;
+}
 
+.altered-col {
+  display: flex;
+  flex-direction: column;
+}
+
+input, select {
+  background-color: var(--clr-dark);
+  color: var(--clr-font);
+  border-radius: 5px;
+  font-size: 1.1rem;
+  max-width: 100px;
+}
+input[type=text] {
+  font-weight: 400;
+}
 
 .color-box {
   min-width: 150px;
   min-height: 100px;
-  width: 200px;
   background-color: #000;
   border: 1px solid rgba(0, 0, 0, 0.15);
 
 }
 .color-col {
   /* background-color: #000; */
-
-}
-.color-col-display {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  height: 400px;
-  width: 100%;
 }
-.color-col-hex {
-    background-color: rgba(0, 0, 0, 0.75);
-    font-size: 1.1rem;
-    text-align: center;
-    padding: .4em 0;
-    text-transform: uppercase;
+
+.btn {
+  color: var(--clr-font);
+  background-color: var(--clr-accent);
+  font-size: 1.2rem;
+  padding: .4em .8em;
+  border: none;
+  border-radius: 15px;
 }
+.btn:hover {
+  opacity: .8;
+}
+
+
+.toggle {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.theme-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em 0;
+  align-items: center;
+}
+
 
 
 .color-editor {
     display: flex;
     justify-content: center;
-    gap: 3em;
 }
 
 
 
-
-
 @media (min-width: 0px) {
+
   .App {
     width: 400px;
   }
