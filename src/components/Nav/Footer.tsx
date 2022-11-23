@@ -8,7 +8,7 @@ export default function Footer() {
     <div className="Footer">
       <div className="footer-logo">
         <p className="footer-copyright">
-          © 2022 Cover Image Generator. All rights reserved
+          © 2022 Color Generator. All rights reserved
         </p>
       </div>
 
