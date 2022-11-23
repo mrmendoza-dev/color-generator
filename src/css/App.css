@@ -95,6 +95,8 @@ button {
   display: flex;
   width: 90%;
   margin-top: 2em;
+  overflow: auto;
+  /* overflow-x: scroll; */
  }
 
 .controls-banner {
@@ -119,7 +121,7 @@ button {
 
 }
 .color-col {
-  /* background-color: #000; */
+  background-color: #000;
 
 }
 .color-col-display {
