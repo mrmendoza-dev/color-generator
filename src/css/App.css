@@ -118,12 +118,11 @@ button {
   width: 200px;
   background-color: #000;
   border: 1px solid rgba(0, 0, 0, 0.15);
-
 }
 .color-col {
   background-color: #000;
-
 }
+
 .color-col-display {
   border: 1px solid rgba(0, 0, 0, 0.15);
   height: 400px;

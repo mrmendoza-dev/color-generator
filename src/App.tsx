@@ -23,69 +23,80 @@ function App() {
       "quad",
     ];
     
-    const [currentColor, setCurrentColor] = useState("#000000");
-    const [alteredColor, setAlteredColor] = useState("#000000");
-    const [numColors, setNumColors] = useState(5);
-    const [colorMode, setColorMode] = useState(modes[0]);
+
     const [hashed, setHashed] = useState(false);
     const [alterMode, setAlterMode] = useState(true);
-    const [alterPercent, setAlterPercent] = useState(25);
     const [colorTheme, setColorTheme] = useState([]);
 
-
-    const modeInput = useRef();
     const apiUrl = "https://www.thecolorapi.com/scheme";
 
+    const [formData, setFormData] = useState({
+      
+      color: "#000000",
+
+      format: "hex",
+      darken: true,
+      alterPercent: 10,
+      numColors: 5,
+      themeMode: "",
+
+      valueR: 0,
+      valueG: 0,
+      valueB: 0,
+      opacity: 1,
+    });
+    const [altered, setAltered] = useState("#000000");
+
+    function handleChange(event: any) {
+      const { name, value, type, checked } = event.target;
+      setFormData((prevFormData) => {
+        return {
+          ...prevFormData,
+          [name]: type === "checkbox" ? checked : value,
+        };
+      });
+
+      console.log(value);
+      console.log(formData);
+    }
+
+    function handleSubmit(event: any) {
+      event.preventDefault();
+      // submitToApi(formData)
+    }
 
     useEffect(() => {
-      setCurrentColor(generateRandomColor());
+      generateRandomColor();
     }, []); 
 
     useEffect(() => {
       generateTheme();
-    }, [currentColor]); 
+    }, [altered, formData]); 
     
+    useEffect(() => {
+      alterColor();
 
+    }, [formData.color]); 
 
   function copyColor(e: any) {
     let color = e.currentTarget.style.backgroundColor.replace("#", "");
-    console.log(color);
-
     let copyText = "";
     if (!hashed) {
       copyText = color;
     } else {
       copyText = "#" + color;
     }
-    
     navigator.clipboard.writeText(color);
   }
 
  
 
-function toggleHash() {
-    setHashed((prevState) => !prevState);
-}
 function toggleAlter() {
     setAlterMode((prevState) => !prevState);
 }
 
-function updateColor(color: string) {
-    setCurrentColor(color);
-}
-function updateNumColors(e: any) {
-    let num = e.target.value
-    setNumColors(num);
-}
-function updateAlterPercent(e: any) {
-  let num = e.target.value;
-  setAlterPercent(num);
-}
 
-function updateMode(e: any) {
-    let mode = e.target.value;
-    setColorMode(mode);
-}
+
 
 function generateRandomColor() {
     function randomValue() {
@@ -97,14 +108,21 @@ function generateRandomColor() {
     let b = randomValue();
 
   let hex = convertRGBToHex(r, g, b).toUpperCase();
-  updateColor(hex);
+
+
+    setFormData((prevFormData) => {
+    return {
+      ...prevFormData,
+      color: hex
+    }});
+
   return hex
 }
 
 
 function generateTheme() {
-    let hexVal = currentColor.replace("#", "");
-    let url = `${apiUrl}?hex=${hexVal}&mode=${colorMode}&count=${numColors}`;
+    let hexVal = altered.replace("#", "");
+    let url = `${apiUrl}?hex=${hexVal}&mode=${formData.themeMode}&count=${formData.numColors}`;
 
     fetch(url, { method: "GET" })
         .then((res) => res.json())
@@ -148,18 +166,23 @@ function generateTheme() {
     return hex as any;
   }
 
-  function alterColor(hex: any, percentage: any) {
+  function alterColor() {
+    let percentage = Number(formData.alterPercent);
+
     if (alterMode) {
       percentage = -percentage;
     }
-    const { r, g, b } = convertHexToRGB(hex);
+
+
+    const { r, g, b } = convertHexToRGB(formData.color);
     const amount = Math.floor((percentage / 100) * 255);
     const newR = increaseWithin0To255(r, amount);
     const newG = increaseWithin0To255(g, amount);
     const newB = increaseWithin0To255(b, amount);
-    const altered =  convertRGBToHex(newR, newG, newB);
-    // setAlteredColor(altered);
-    return altered;
+    const alteredColor =  convertRGBToHex(newR, newG, newB);
+
+    setAltered(alteredColor);
+  //   return alteredColor;
 
   }
 
@@ -176,23 +199,23 @@ function generateTheme() {
 
       <div className="content-wrapper">
         <div className="color-editor controls-banner">
-          <div className="controls">
+          <form onSubmit={handleSubmit} className="controls">
             <div className="color-selector">
               <input
                 name="color"
                 type="color"
                 className="form-color"
-                onChange={(e) => updateColor(e.target.value.toUpperCase())}
-                value={currentColor}
+                onChange={handleChange}
+                value={formData.color}
               />
               <input
                 name="hex"
                 type="text"
                 id="hexInput"
                 placeholder="#000000"
-                value={currentColor}
+                value={formData.color}
                 className="form-input"
-                onChange={(e) => updateColor(e.target.value.toUpperCase())}
+                onChange={handleChange}
               />
               <button className="form-btn" onClick={generateRandomColor}>
                 Random
@@ -205,16 +228,16 @@ function generateTheme() {
                 <button className="form-btn" onClick={toggleAlter}>
                   TOGGLE
                 </button>
-                <div className="form-silder">
-                  <p className="silder-text">{alterPercent}%</p>
+                <div className="form-slider">
+                  <p className="silder-text">{formData.alterPercent}%</p>
                   <input
-                    name="slider"
+                    name="alterPercent"
                     type="range"
                     className="slider"
                     min="0"
                     max="100"
-                    value={alterPercent}
-                    onChange={updateAlterPercent}
+                    value={formData.alterPercent}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -226,8 +249,8 @@ function generateTheme() {
                 <input
                   name="numColors"
                   type="number"
-                  value={numColors}
-                  onChange={updateNumColors}
+                  value={formData.numColors}
+                  onChange={handleChange}
                   className="form-input"
                 />
               </div>
@@ -235,10 +258,10 @@ function generateTheme() {
               <div className="">
                 <label htmlFor="mode">Theme Mode</label>
                 <select
-                  name="mode"
+                  name="themeMode"
                   className="form-select"
-                  onChange={updateMode}
-                  value={colorMode}
+                  onChange={handleChange}
+                  value={formData.themeMode}
                 >
                   {modes.map((mode) => {
                     return (
@@ -258,30 +281,29 @@ function generateTheme() {
                 Generate
               </button>
             </div>
-          </div>
+          </form>
 
           <div className="color-altered-display">
             <div className="altered-col">
               <p className="color-text">Input Color</p>
               <button
                 className="color-box"
-                style={{ backgroundColor: currentColor }}
+                style={{ backgroundColor: formData.color }}
                 onClick={copyColor}
               ></button>
-              <p className="color-col-hex">{currentColor}</p>
+              <p className="color-col-hex">{formData.color}</p>
             </div>
+
             <div className="altered-col">
               <p className="color-text">Altered</p>
               <button
                 className="color-box"
                 style={{
-                  backgroundColor: alterColor(currentColor, alterPercent),
+                  backgroundColor: altered,
                 }}
                 onClick={copyColor}
               ></button>
-              <p className="color-col-hex">
-                {alterColor(currentColor, alterPercent)}
-              </p>
+              <p className="color-col-hex">{altered}</p>
             </div>
           </div>
         </div>
