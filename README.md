@@ -12,7 +12,7 @@ Customizable color scheme generator. Create themes, modify individual colors, an
 - RGB value adjuster
 
 ## Resources
-[The Color API](https://www.thecolorapi.com/docs#schemes)
-
+- [The Color API](https://www.thecolorapi.com/docs#schemes)
+- [Figma UI](https://www.figma.com/file/twasy8Bca4hW7gunLFSLoY/Color-Scheme-Generator?node-id=0%3A1&t=H8FgkaFvTPmU59rl-0)
 
 
