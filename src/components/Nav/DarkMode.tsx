@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-// import "../css/index.css";
-// import "../css/Nav.css";
+// import "../css/index.scss";
+// import "../css/Nav.scss";
 
 export default function DarkMode() {
   const root: any = document.querySelector(":root");
@@ -51,14 +51,13 @@ export default function DarkMode() {
   ];
 
   function updateTheme(theme: any) {
-      root.style.setProperty("--clr-font", theme.font);
-      root.style.setProperty("--clr-bg", theme.bg);
-      root.style.setProperty("--clr-contrast", theme.contrast);
-      root.style.setProperty("--clr-accent1", theme.accent1);
-      root.style.setProperty("--clr-accent2", theme.accent2);
-      root.style.setProperty("--clr-shadow", theme.shadow);
-      root.style.setProperty("--clr-hr", theme.hr);
-
+    root.style.setProperty("--clr-font", theme.font);
+    root.style.setProperty("--clr-bg", theme.bg);
+    root.style.setProperty("--clr-contrast", theme.contrast);
+    root.style.setProperty("--clr-accent1", theme.accent1);
+    root.style.setProperty("--clr-accent2", theme.accent2);
+    root.style.setProperty("--clr-shadow", theme.shadow);
+    root.style.setProperty("--clr-hr", theme.hr);
   }
 
   function setTheme() {

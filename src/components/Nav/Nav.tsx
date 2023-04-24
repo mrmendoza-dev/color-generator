@@ -1,9 +1,6 @@
-import { nanoid } from "nanoid";
 // import { Link } from "react-router-dom";
-import logo from "./logo.png";
-// import "../css/index.css";
-import "./index.css";
-import DarkMode from "./DarkMode";
+// import "../css/index.scss";
+import "./index.scss";
 
 export default function Nav(props: any) {
   return (

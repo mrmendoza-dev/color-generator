@@ -1,5 +1,4 @@
-import "./index.css";
-import logo from "./logo.png";
+import "./index.scss";
 
 export default function Footer() {
   const repoLink = "https://github.com/mrmendoza171/color-generator";

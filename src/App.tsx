@@ -1,85 +1,76 @@
-import { useState, useEffect, useRef } from 'react'
-import './css/App.css'
-import "./css/Form.css";
+import { useEffect, useState } from "react";
+import "./css/App.scss";
+import "./css/Form.scss";
 
-import logo from "./assets/logo.png"
-import {nanoid} from "nanoid"
+import { nanoid } from "nanoid";
+import logo from "./assets/logo.png";
 import Footer from "./components/Nav/Footer";
-import Nav from "./components/Nav/Nav";
-
-
-
-
 
 function App() {
-    const modes = [
-      "analogic",
-      "analogic-complement",
-      "monochrome",
-      "monochrome-dark",
-      "monochrome-light",
-      "complement",
-      "triad",
-      "quad",
-    ];
-    
+  const modes = [
+    "analogic",
+    "analogic-complement",
+    "monochrome",
+    "monochrome-dark",
+    "monochrome-light",
+    "complement",
+    "triad",
+    "quad",
+  ];
 
-    const [hashed, setHashed] = useState(false);
-    const [alterMode, setAlterMode] = useState(true);
-    const [colorTheme, setColorTheme] = useState([]);
+  const [hashed, setHashed] = useState(false);
+  const [alterMode, setAlterMode] = useState(true);
+  const [colorTheme, setColorTheme] = useState([]);
 
-    const apiUrl = "https://www.thecolorapi.com/scheme";
+  const apiUrl = "https://www.thecolorapi.com/scheme";
 
-    const [formData, setFormData] = useState({
-      
-      color: "#000000",
+  const [formData, setFormData] = useState({
+    color: "#000000",
+    format: "hex",
+    darken: true,
+    alterPercent: 10,
+    numColors: 5,
+    themeMode: "",
+    valueR: 0,
+    valueG: 0,
+    valueB: 0,
+    opacity: 1,
+  });
+  const [altered, setAltered] = useState("#000000");
 
-      format: "hex",
-      darken: true,
-      alterPercent: 10,
-      numColors: 5,
-      themeMode: "",
-
-      valueR: 0,
-      valueG: 0,
-      valueB: 0,
-      opacity: 1,
+  function handleChange(event: any) {
+    const { name, value, type, checked } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: type === "checkbox" ? checked : value,
+      };
     });
-    const [altered, setAltered] = useState("#000000");
+  }
 
-    function handleChange(event: any) {
-      const { name, value, type, checked } = event.target;
-      setFormData((prevFormData) => {
-        return {
-          ...prevFormData,
-          [name]: type === "checkbox" ? checked : value,
-        };
-      });
+  function handleSubmit(event: any) {
+    event.preventDefault();
+  }
 
-      console.log(value);
-      console.log(formData);
-    }
+  useEffect(() => {
+    generateRandomColor();
+  }, []);
 
-    function handleSubmit(event: any) {
-      event.preventDefault();
-      // submitToApi(formData)
-    }
+  useEffect(() => {
+    generateTheme();
+  }, [altered, formData]);
 
-    useEffect(() => {
-      generateRandomColor();
-    }, []); 
+  useEffect(() => {
+    alterColor();
+  }, [formData.color]);
 
-    useEffect(() => {
-      generateTheme();
-    }, [altered, formData]); 
-    
-    useEffect(() => {
-      alterColor();
-
-    }, [formData.color]); 
+  useEffect(() => {
+    updateColorFromSliders();
+  }, [formData.valueR, formData.valueG, formData.valueB]);
 
   function copyColor(e: any) {
     let color = e.currentTarget.style.backgroundColor.replace("#", "");
+    console.log(typeof color);
     let copyText = "";
     if (!hashed) {
       copyText = color;
@@ -89,16 +80,25 @@ function App() {
     navigator.clipboard.writeText(color);
   }
 
- 
-
-function toggleAlter() {
+  function toggleAlter() {
     setAlterMode((prevState) => !prevState);
-}
+  }
 
+  function updateColorFromSliders() {
+    const updatedColor = convertRGBToHex(
+      formData.valueR,
+      formData.valueG,
+      formData.valueB
+    );
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        color: updatedColor,
+      };
+    });
+  }
 
-
-
-function generateRandomColor() {
+  function generateRandomColor() {
     function randomValue() {
       let r = Math.random() * 256;
       return Math.floor(r);
@@ -107,31 +107,29 @@ function generateRandomColor() {
     let g = randomValue();
     let b = randomValue();
 
-  let hex = convertRGBToHex(r, g, b).toUpperCase();
-
+    let hex = convertRGBToHex(r, g, b).toUpperCase();
 
     setFormData((prevFormData) => {
-    return {
-      ...prevFormData,
-      color: hex
-    }});
+      return {
+        ...prevFormData,
+        color: hex,
+      };
+    });
 
-  return hex
-}
+    return hex;
+  }
 
-
-function generateTheme() {
+  function generateTheme() {
     let hexVal = altered.replace("#", "");
     let url = `${apiUrl}?hex=${hexVal}&mode=${formData.themeMode}&count=${formData.numColors}`;
 
     fetch(url, { method: "GET" })
-        .then((res) => res.json())
-        .then((data) => {
+      .then((res) => res.json())
+      .then((data) => {
         let colorsArray = data.colors;
         setColorTheme(colorsArray);
-        });
-}
-
+      });
+  }
 
   function isValidHex(hex: string) {
     if (!hex) return false;
@@ -173,17 +171,22 @@ function generateTheme() {
       percentage = -percentage;
     }
 
-
     const { r, g, b } = convertHexToRGB(formData.color);
     const amount = Math.floor((percentage / 100) * 255);
     const newR = increaseWithin0To255(r, amount);
     const newG = increaseWithin0To255(g, amount);
     const newB = increaseWithin0To255(b, amount);
-    const alteredColor =  convertRGBToHex(newR, newG, newB);
+    const alteredColor = convertRGBToHex(newR, newG, newB);
 
     setAltered(alteredColor);
-  //   return alteredColor;
-
+    // setFormData((prevFormData) => {
+    //   return {
+    //     ...prevFormData,
+    //     valueR: newR,
+    //     valueG: newG,
+    //     valueB: newB,
+    //   };
+    // });
   }
 
   function increaseWithin0To255(hex: any, amount: any) {
@@ -198,7 +201,7 @@ function generateTheme() {
       </div>
 
       <div className="content-wrapper">
-        <div className="color-editor controls-banner">
+        <div className="controls-banner">
           <form onSubmit={handleSubmit} className="controls">
             <div className="color-selector">
               <input
@@ -222,7 +225,7 @@ function generateTheme() {
               </button>
             </div>
 
-            <div className="color-editor">
+            {/* <div className="color-editor">
               <div className="toggle">
                 <p className="toggle-text">Lighten/Darken</p>
                 <button className="form-btn" onClick={toggleAlter}>
@@ -241,7 +244,46 @@ function generateTheme() {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
+
+            {/* <div className="rgb-slider">
+              <div className="form-slider">
+                <p className="silder-text">Red: {formData.valueR}</p>
+                <input
+                  name="valueR"
+                  type="range"
+                  className="slider"
+                  min="0"
+                  max="255"
+                  value={formData.valueR}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-slider">
+                <p className="silder-text">Green: {formData.valueG}</p>
+                <input
+                  name="valueG"
+                  type="range"
+                  className="slider"
+                  min="0"
+                  max="255"
+                  value={formData.valueG}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-slider">
+                <p className="silder-text">Blue: {formData.valueB}</p>
+                <input
+                  name="valueB"
+                  type="range"
+                  className="slider"
+                  min="0"
+                  max="255"
+                  value={formData.valueB}
+                  onChange={handleChange}
+                />
+              </div>
+            </div> */}
 
             <div className="theme-filters">
               <div className="">
@@ -294,7 +336,7 @@ function generateTheme() {
               <p className="color-col-hex">{formData.color}</p>
             </div>
 
-            <div className="altered-col">
+            {/* <div className="altered-col">
               <p className="color-text">Altered</p>
               <button
                 className="color-box"
@@ -304,7 +346,7 @@ function generateTheme() {
                 onClick={copyColor}
               ></button>
               <p className="color-col-hex">{altered}</p>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -330,15 +372,4 @@ function generateTheme() {
   );
 }
 
-export default App
-
-
-              // <div className="color-col">
-              //   <button
-              //     key={nanoid()}
-              //     className="color-col-display"
-              //     style={{ backgroundColor: color.hex.value }}
-              //     onClick={copyColor}
-              //   ></button>
-              //   <p className="color-col-hex">{color.hex.value}</p>
-              // </div>
+export default App;
